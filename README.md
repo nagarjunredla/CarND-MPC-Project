@@ -2,14 +2,29 @@
 
 __Student describes their model in detail. This includes the state, actuators and update equations.__
 
+We use a kinematic model to implement the Model Predictive Controller. We avoid using Dynamic models to reduce complexity so the program can run in real time. The states were chosen as x (vehicle x coordinate), y (vehicle y coordinate), psi (vehicle heading angle), v (vehicle velocity, cte (cross track error) and epsi (psi error). The control outputs are delta (steering angle) and a (throttle value). The values are updated for the current timestep by using the values from the previous time step as given below
+
+![Equations](./vids/equations.png)
+
+Although however, there was a slight change in the update equation of psi in the project. It was changed to
+
+![Correction](./vids/correction.png)
 
 __Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.__
+
+As suggested in the quizzes and lessons, the values for N and dt were chosen to be 10 and 0.1 respectively for a time horizon of 1s. Other combinations produced wobbly behaviour so I decided to stick with those values.
 
 
 __If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.__
 
+Yes, preprocessing waypoints allows us to fit a polynomial easier. This was implemented in `MPC.cpp`. I converted the points from global coordinates to the vehicle's coordinates. The car points were then calculated by using the equations from the kinematic model `ptsx_car[i] = x * cos(-psi) - y * sin(-psi)`  `ptsy_car[i] = x * sin(-psi) + y * cos(-psi)`
+
+We fit a third degree polynomial as suggested (since the simulator track also has sharp curves) using polyfit. The cross track error is calculated from the fitted polynomial using `polyeval()`. The psi error was calculated by taking using `arctan` of the second coefficient of the fitted polynomial.
+
 
 __The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.__
+
+As suggested in the quizzes and lessons, the time horizon was chosen to be 1s with 0.1 dt. This handles a latency of 100ms but only works best for slower speeds. The values could be changed to achieve higher speeds
 
 
 

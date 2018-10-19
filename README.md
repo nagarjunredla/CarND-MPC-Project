@@ -1,3 +1,18 @@
+# Writeup
+
+__Student describes their model in detail. This includes the state, actuators and update equations.__
+
+
+__Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.__
+
+
+__If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.__
+
+
+__The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.__
+
+
+
 # CarND-Controls-MPC
 Self-Driving Car Engineer Nanodegree Program
 
